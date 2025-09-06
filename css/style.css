@@ -29,6 +29,10 @@
 .login-body > .container {
     background-color: rgba(14, 64, 45, 0.4); /* 40% opacity */
     width: 100%;
+
+}
+
+.login-body > .container {
     height: 100vh;
 }
 

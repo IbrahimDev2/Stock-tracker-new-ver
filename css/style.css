@@ -1,10 +1,16 @@
 /* Import fonts */
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
 
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-body {
+.registration-body, .login-body {
  background-image: url('../image/registration.jpg');
-
+    width: 100%;
+    height: 100%;
     background-size: cover; 
     background-repeat: no-repeat; 
     background-position: center; 
@@ -19,9 +25,11 @@ body {
 }
 
 
-.container{
-   background-color: rgba(14, 64, 45, 0.4); /* 60% opacity */
-     width:  100%;
+.registration-body .container,
+.login-body > .container {
+    background-color: rgba(14, 64, 45, 0.4); /* 40% opacity */
+    width: 100%;
+    height: 100vh;
 }
 
 ul li {
@@ -144,3 +152,38 @@ a, a:hover, a:focus {
 }
 
 
+/* password show hide */
+.password-container {
+  position: relative;
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 40px; /* space for eye icon */
+}
+
+.password-container button {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* input */
+.form-group{
+    margin-bottom: 19px;
+}
+
+
+/* alerts */
+.alert-success {
+    background-color: #28a745 !important;
+    color: #fff !important;
+}
+.alert {
+    position: relative; /* ya fixed/absolute agar overlay ke upar chahiye */
+    z-index: 1050;      /* Bootstrap modals / alerts ke liye standard */
+}

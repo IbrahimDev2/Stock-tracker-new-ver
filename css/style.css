@@ -1,3 +1,58 @@
+/*
+  style_deep_comments.css
+  =======================
+  PURPOSE:
+  - This file contains the project's custom CSS with extremely detailed, line-by-line
+    comments aimed at beginners. Each rule is followed by explanations and the
+    "way of thinking" behind choosing that rule.
+
+  HOW TO READ THIS FILE (way-of-thinking):
+  1. Read a comment block above a selector to understand *why* the selector exists.
+  2. For each property, comments explain the rationale (accessibility, responsiveness,
+     visual hierarchy, or performance). Think: "What problem does this property solve?"
+  3. When you need to make changes, ask: "Which visual goal am I changing?" — then
+     find the related selector and adjust carefully.
+*/
+
+/*
+ * Base layout and page-level thinking
+ * ================================
+ * We start by defining the page background, minimum height and a simple flex
+ * layout so footer sticks to the bottom. The mental model: body is the outer
+ * container; main grows to fill available space. This is simpler and more
+ * reliable than absolute positioning for basic app layout.
+ */
+
+
+/* Make the <main> element take remaining space so footer stays at bottom.
+   Mental model: main is the flexible region that grows; footer does not. */
+main {
+    flex: 1;
+}
+
+/*
+ * Navigation styling
+ * ==================
+ * Small, focused tweaks to spacing and hover states. The thinking here:
+ * - Use transitions for perceived smoothness (UX)
+ * - Keep brand visible and bold for identity
+ */
+.navbar-brand {
+    /* Make the brand more prominent — heavier font weight for recognition */
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    /* Add a subtle transition for color changes; avoids jarring instant color swaps */
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    /* On hover, change color to a warm accent (yellow). Use !important carefully
+       only when necessary to override Bootstrap defaults. Way of thinking: hover
+       should be visible but not too loud. */
+    color: #ffc107 !important;
+}
 /* Import fonts */
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
 
@@ -201,3 +256,16 @@ a, a:hover, a:focus {
             font-weight:bold;
             margin:50px;
         }
+
+
+        /* Reponsive */
+        @media (max-width: 320px) {
+  .navbar .container {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .navbar-brand {
+    font-size: 14px; /* smaller logo text so it fits */
+  }
+}

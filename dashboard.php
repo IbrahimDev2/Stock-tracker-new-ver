@@ -21,7 +21,7 @@ $recent_movements = get_recent_movements($conn, 5);
 ?>
 
 <main class="container mt-4">
-    <?php if(isset($_SESSION['success'])): ?>
+    <?php if (isset($_SESSION['success'])): ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?= htmlspecialchars($_SESSION['success']) ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -31,16 +31,13 @@ $recent_movements = get_recent_movements($conn, 5);
 
 
     <div class="container mt-4">
-         <!-- ROW: Title Row -->
-        <!-- row = Bootstrap grid row, inside container -->
         <div class="row">
-            <!-- col-12 = column that takes full width -->
+
             <div class="col-12">
                 <h1 class="mb-4">Inventory Management Dashboard</h1>
-                <!-- THINK: Heading for the page -->
-                <!-- Without Bootstrap: <h1 style="margin-bottom:20px;"> ... -->
+                <!-- Heading for the page -->
             </div>
-        
+
         </div>
         <div class="row mb-4">
             <div class="col-md-3 d-flex">
@@ -72,20 +69,20 @@ $recent_movements = get_recent_movements($conn, 5);
 
             <div class="col-md-3 d-flex">
                 <div class="card bg-info text-white flex-fill">
-                <div class="card-body">
-                    <h5 class="card-title">Quick Actions</h5>
-                    <a href="products/add.php" class="btn btn-light btn-sm">Add Product</a>
-                </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Quick Actions</h5>
+                        <a href="products/add.php" class="btn btn-light btn-sm">Add Product</a>
+                    </div>
                 </div>
             </div>
-            </div>
-
         </div>
-            <!-- =================== RECENT STOCK MOVEMENTS (TABLE) =================== -->
+
+    </div>
+    <!-- =================== RECENT STOCK MOVEMENTS (TABLE) =================== -->
     <div class="row">
         <div class="col-12">
             <div class="card">
-                
+
                 <!-- Card Header -->
                 <div class="card-header">
                     <h5>Recent Stock Movements</h5>
@@ -97,10 +94,10 @@ $recent_movements = get_recent_movements($conn, 5);
                         <!-- If no data available -->
                         <p class="text-muted">No recent stock movements found.</p>
                     <?php else: ?>
-                        <!-- Table wrapper (scrollable on small devices) -->
+
                         <div class="table-responsive">
-                            <!-- Bootstrap striped table -->
-                            <!-- THINK: Table is the best structure for tabular data -->
+
+
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -116,7 +113,7 @@ $recent_movements = get_recent_movements($conn, 5);
                                         <tr>
                                             <!-- Product Name -->
                                             <td><?php echo htmlspecialchars($movement['product_name']); ?></td>
-                                            
+
                                             <!-- Type: IN or OUT -->
                                             <td style="color:black;">
                                                 <!-- Badge color depends on type -->

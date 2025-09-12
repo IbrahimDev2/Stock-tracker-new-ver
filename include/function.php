@@ -4,85 +4,44 @@ if (!defined('APP_INIT')) {
 }
 
 // =============================================================================
-// UTILITY FUNCTIONS FOR DATA PROCESSING & UI 🍰
+// UTILITY FUNCTIONS
 // =============================================================================
 
 /**
- * sanitize_input($data)
- * 
- * Easy Terms:
- * - User se aayi hui input ko **safe aur clean banata hai**
- * - Example: Extra spaces, backslashes, harmful scripts → remove kar deta hai
- *
- * Mental Model / Logic:
- * 1. Problem: User input messy aur dangerous ho sakta hai
- * 2. Break into steps:
- *    - trim() → extra spaces remove
- *    - stripslashes() → backslashes remove
- *    - htmlspecialchars() → special characters safe
- * 3. Variable handling: $data ko modify karke return
- * 4. Reusability: Har form/input me call kar sakte ho
- * 5. Practice: Try "<script>", "  hello  ", "O\'Reilly", etc
+ * sanitize_input
+ * Clean user input: trim spaces, remove slashes, convert special chars
  */
-function sanitize_input($data) {
-    $data = trim($data);             // Extra spaces remove
-    $data = stripslashes($data);     // Backslashes remove
-    $data = htmlspecialchars($data); // Special characters safe
-    return $data;                    // Clean data return
+function sanitize_input($data)
+{
+    return htmlspecialchars(stripslashes(trim($data)));
 }
 
-
 /**
- * display_error($message)
- * 
- * Easy Terms:
- * - Error message ko **red box** me user ko show karo
+ * display_error
+ * Show error messages in red alert box
  */
-function display_error($message) {
+function display_error($message)
+{
     return "<div class='alert alert-danger' role='alert'>" . htmlspecialchars($message) . "</div>";
 }
 
 /**
- * display_success($message)
- * 
- * Easy Terms:
- * - Success message ko **green box** me user ko show karo
+ * display_success
+ * Show success messages in green alert box
  */
-function display_success($message) {
+function display_success($message)
+{
     return "<div class='alert alert-success' role='alert'>" . htmlspecialchars($message) . "</div>";
 }
 
-
-
-function add_product($conn, $name, $sku, $description, $category_id, $price, $quantity, $min_stock_level) {
-    $stmt = $conn->prepare("INSERT INTO products (st_p_name, st_p_sku, st_p_description, st_p_category_id, st_price, st_quantity, st_min_stock_level) 
-                           VALUES (?, ?, ?, ?, ?, ?, ?)");
-    return $stmt->execute([$name, $sku, $description, $category_id, $price, $quantity, $min_stock_level]);
-}
-
-
-
-
-
-
-
 // =============================================================================
-// PRODUCT MANAGEMENT FUNCTIONS
+// PRODUCT FUNCTIONS (MySQLi version)
 // =============================================================================
 
 /**
- * Retrieve all products with optional search and filtering
- * 
- * This function demonstrates:
- * - Dynamic SQL query building based on user input
- * - JOIN operations to combine data from multiple tables
- * - Parameter binding for security (prevents SQL injection)
- * - Database-agnostic case-insensitive search (ILIKE for PostgreSQL, LIKE for MySQL)
- * 
- * @param PDO $conn Database connection object
- * @param string $search Search term for product name, SKU, or description
- * @param string $category_id Filter by specific category ID
- * @return array Array of products with category information
+ * add_product
+ * Insert a new product into the database
+ * @param mysqli $conn MySQLi connection object
  */
 function get_all_products($conn, $search = '', $category_id = '') {
 
@@ -187,6 +146,16 @@ $data = $result->fetch_all(MYSQLI_ASSOC);
 
 }
 
+/**
+ * get_all_products
+ * Fetch all products with optional search and category filter (MySQLi)
+ */
+function get_all_products($conn, $search = '', $category_id = '')
+{
+    $query = "SELECT * FROM products";
+    $conditions = [];
+    $params = [];
+    $types = "";
 
 function get_product_by_id($conn, $id) {
     $stmt = $conn->prepare("SELECT p.* FROM products p WHERE p.st_p_id = ?");
@@ -196,6 +165,12 @@ function get_product_by_id($conn, $id) {
     return $result->fetch_assoc(); // Fetch row as associative array
 }
 
+    // Category filter
+    if (!empty($category_id)) {
+        $conditions[] = "st_p_category_id = ?";
+        $params[] = $category_id;
+        $types .= "i";
+    }
 
 function update_product($conn, $id, $name, $sku, $description,  $category_id, $price, $quantity, $min_stock_level) {
     $stmt = $conn->prepare("UPDATE products SET st_p_name = ?, st_p_sku = ?, st_p_description = ?, st_p_category_id = ?, st_price = ?, 

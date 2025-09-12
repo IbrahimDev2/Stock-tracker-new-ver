@@ -64,7 +64,6 @@ if (isset($_POST['submit-login'])) {
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <!-- Custom styles -->
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/style-responsive.css" rel="stylesheet" />
     <style>
         .password-container {
             position: relative;

@@ -1,28 +1,3 @@
-/*
-  style_deep_comments.css
-  =======================
-  PURPOSE:
-  - This file contains the project's custom CSS with extremely detailed, line-by-line
-    comments aimed at beginners. Each rule is followed by explanations and the
-    "way of thinking" behind choosing that rule.
-
-  HOW TO READ THIS FILE (way-of-thinking):
-  1. Read a comment block above a selector to understand *why* the selector exists.
-  2. For each property, comments explain the rationale (accessibility, responsiveness,
-     visual hierarchy, or performance). Think: "What problem does this property solve?"
-  3. When you need to make changes, ask: "Which visual goal am I changing?" — then
-     find the related selector and adjust carefully.
-*/
-
-/*
- * Base layout and page-level thinking
- * ================================
- * We start by defining the page background, minimum height and a simple flex
- * layout so footer sticks to the bottom. The mental model: body is the outer
- * container; main grows to fill available space. This is simpler and more
- * reliable than absolute positioning for basic app layout.
- */
-
 body {
     min-height: 100vh;
     display: flex;
@@ -31,9 +6,6 @@ body {
 }
 
 
-
-/* Make the <main> element take remaining space so footer stays at bottom.
-   Mental model: main is the flexible region that grows; footer does not. */
 main {
     flex: 1;
 }
@@ -62,35 +34,37 @@ main {
     color: #ffc107 !important;
 }
 
-.navbar{
+.navbar {
     background-color: #0E402D;
 }
 
-.footer{
+.footer {
     background-color: #0E402D;
 
 }
 
 .navbar .nav-link,
-.navbar .navbar-brand{
+.navbar .navbar-brand {
     color: #ffff;
 }
+
 /* Import fonts */
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.registration-body, .login-body {
- background-image: url('../image/registration.jpg');
+.registration-body,
+.login-body {
+    background-image: url('../image/registration.jpg');
     width: 100%;
     height: 100%;
-    background-size: cover; 
-    background-repeat: no-repeat; 
-    background-position: center; 
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     color: #5A6650;
     font-family: 'Open Sans', sans-serif;
     padding: 0px !important;
@@ -103,13 +77,14 @@ main {
 
 
 .registration-body .container,
-.login-body > .container {
-    background-color: rgba(14, 64, 45, 0.4); /* 40% opacity */
+.login-body>.container {
+    background-color: rgba(14, 64, 45, 0.4);
+    /* 40% opacity */
     width: 100%;
 
 }
 
-.login-body > .container {
+.login-body>.container {
     height: 100vh;
 }
 
@@ -117,15 +92,14 @@ ul li {
     list-style: none;
 }
 
-a, a:hover, a:focus {
+a,
+a:hover,
+a:focus {
     text-decoration: none;
     outline: none;
 }
 
-/* #container {
-    width: 100%;
-    height: 100%;
-} */
+
 
 
 /*login page*/
@@ -140,7 +114,7 @@ a, a:hover, a:focus {
 
 .form-signin h2.form-signin-heading {
     margin: 0;
-    padding:20px 15px;
+    padding: 20px 15px;
     text-align: center;
     background: #0E402D;
     border-radius: 5px 5px 0 0;
@@ -155,12 +129,14 @@ a, a:hover, a:focus {
 .form-signin .checkbox {
     margin-bottom: 14px;
 }
+
 .form-signin .checkbox {
     font-weight: normal;
     color: #5A6650;
     font-weight: 300;
     font-family: 'Open Sans', sans-serif;
 }
+
 .form-signin .form-control {
     position: relative;
     font-size: 16px;
@@ -170,10 +146,13 @@ a, a:hover, a:focus {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
 .form-signin .form-control:focus {
     z-index: 2;
 }
-.form-signin input[type="text"], .form-signin input[type="password"] {
+
+.form-signin input[type="text"],
+.form-signin input[type="password"] {
     margin-bottom: 15px;
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -211,7 +190,7 @@ a, a:hover, a:focus {
     padding: 20px;
 }
 
-.login-social-link  {
+.login-social-link {
     display: inline-block;
     margin-top: 20px;
     margin-bottom: 15px;
@@ -235,26 +214,27 @@ a, a:hover, a:focus {
 
 /* password show hide */
 .password-container {
-  position: relative;
+    position: relative;
 }
 
 .password-container input {
-  width: 100%;
-  padding-right: 40px; /* space for eye icon */
+    width: 100%;
+    padding-right: 40px;
+    /* space for eye icon */
 }
 
 .password-container button {
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  cursor: pointer;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 /* input */
-.form-group{
+.form-group {
     margin-bottom: 19px;
 }
 
@@ -264,30 +244,34 @@ a, a:hover, a:focus {
     background-color: #28a745 !important;
     color: #fff !important;
 }
+
 .alert {
-    position: relative; /* ya fixed/absolute agar overlay ke upar chahiye */
-    z-index: 1050;      /* Bootstrap modals / alerts ke liye standard */
+    position: relative;
+    /* ya fixed/absolute agar overlay ke upar chahiye */
+    z-index: 1050;
+    /* Bootstrap modals / alerts ke liye standard */
 }
 
 
 /* Forgot Password */
- /* Error message styling */
-        .error p {
-            color:#FF0000;
-            font-size:20px;
-            font-weight:bold;
-            margin:50px;
-        }
+/* Error message styling */
+.error p {
+    color: #FF0000;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 50px;
+}
 
 
-        /* Reponsive */
-        @media (max-width: 320px) {
-  .navbar .container {
-    padding-left: 5px;
-    padding-right: 5px;
-  }
+/* Reponsive */
+@media (max-width: 320px) {
+    .navbar .container {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
 
-  .navbar-brand {
-    font-size: 14px; /* smaller logo text so it fits */
-  }
+    .navbar-brand {
+        font-size: 14px;
+        /* smaller logo text so it fits */
+    }
 }

@@ -78,7 +78,6 @@ if (isset($_POST['submit-btn'])) {
     <link href="css/bootstrap/bootstrap-reset.css" rel="stylesheet">
     <!-- Custom styles -->
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/style-responsive.css" rel="stylesheet" />
     <style>
 
     </style>

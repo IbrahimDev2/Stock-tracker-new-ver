@@ -4,7 +4,7 @@ include 'include/header.php';
 ?>
 
 <main class="container mt-4">
-    <?php if(isset($_SESSION['success'])): ?>
+    <?php if (isset($_SESSION['success'])): ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?= htmlspecialchars($_SESSION['success']) ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -14,61 +14,58 @@ include 'include/header.php';
 
 
     <div class="container mt-4">
-         <!-- ROW: Title Row -->
-        <!-- row = Bootstrap grid row, inside container -->
         <div class="row">
-            <!-- col-12 = column that takes full width -->
+
             <div class="col-12">
                 <h1 class="mb-4">Inventory Management Dashboard</h1>
-                <!-- THINK: Heading for the page -->
-                <!-- Without Bootstrap: <h1 style="margin-bottom:20px;"> ... -->
+                <!-- Heading for the page -->
             </div>
-        
+
         </div>
         <div class="row mb-4">
             <div class="col-md-3 d-flex">
                 <div class="card bg-primary text-white flex-fill">
-                <div class="card-body">
-                    <h5 class="card-title">Total Products</h5>
-                    <h2>200</h2>
-                </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Total Products</h5>
+                        <h2>200</h2>
+                    </div>
                 </div>
             </div>
 
             <div class="col-md-3 d-flex">
                 <div class="card bg-warning text-white flex-fill">
-                <div class="card-body">
-                    <h5 class="card-title">Low Stock Items</h5>
-                    <h2>2</h2>
-                </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Low Stock Items</h5>
+                        <h2>2</h2>
+                    </div>
                 </div>
             </div>
 
             <div class="col-md-3 d-flex">
                 <div class="card bg-success text-white flex-fill">
-                <div class="card-body">
-                    <h5 class="card-title">Categories</h5>
-                    <h2>54</h2>
-                </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Categories</h5>
+                        <h2>54</h2>
+                    </div>
                 </div>
             </div>
 
             <div class="col-md-3 d-flex">
                 <div class="card bg-info text-white flex-fill">
-                <div class="card-body">
-                    <h5 class="card-title">Quick Actions</h5>
-                    <a href="products/add.php" class="btn btn-light btn-sm">Add Product</a>
-                </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Quick Actions</h5>
+                        <a href="products/add.php" class="btn btn-light btn-sm">Add Product</a>
+                    </div>
                 </div>
             </div>
-            </div>
-
         </div>
-            <!-- =================== RECENT STOCK MOVEMENTS (TABLE) =================== -->
+
+    </div>
+    <!-- =================== RECENT STOCK MOVEMENTS (TABLE) =================== -->
     <div class="row">
         <div class="col-12">
             <div class="card">
-                
+
                 <!-- Card Header -->
                 <div class="card-header">
                     <h5>Recent Stock Movements</h5>
@@ -80,10 +77,10 @@ include 'include/header.php';
                         <!-- If no data available -->
                         <p class="text-muted">No recent stock movements found.</p>
                     <?php else: ?>
-                        <!-- Table wrapper (scrollable on small devices) -->
+
                         <div class="table-responsive">
-                            <!-- Bootstrap striped table -->
-                            <!-- THINK: Table is the best structure for tabular data -->
+
+
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -99,13 +96,13 @@ include 'include/header.php';
                                         <tr>
                                             <!-- Product Name -->
                                             <td><?php echo htmlspecialchars($movement['product_name']); ?></td>
-                                            
+
                                             <!-- Type: IN or OUT -->
                                             <td>
                                                 <!-- Badge color depends on type -->
                                                 <span class="badge 
-                                                    <?php echo $movement['movement_type'] == 'in' 
-                                                        ? 'badge-success' 
+                                                    <?php echo $movement['movement_type'] == 'in'
+                                                        ? 'badge-success'
                                                         : 'badge-danger'; ?>">
                                                     <?php echo ucfirst($movement['movement_type']); ?>
                                                 </span>

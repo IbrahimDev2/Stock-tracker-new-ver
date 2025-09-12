@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // =============================================================================
     // GET AND SANITIZE INPUT DATA
     // =============================================================================
-    
+
     /**
      * Extract and clean all form data
      * 
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // =============================================================================
     // INPUT VALIDATION
     // =============================================================================
-    
+
     /**
      * Validate all input according to business rules
      * 
@@ -68,15 +68,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     if (add_product($conn, $name, $sku, $description, $category_id, $price, $quantity, $min_stock_level)) {
-                $success = 'Product added successfully!';
-                
-                // Clear form data on success (reset for next entry)
-                // This is good UX - user can immediately add another product
-                $name = $sku = $description = '';
-                $category_id = $price = $quantity = $min_stock_level = 0;
-            } else {
-                $error = 'Failed to add product. Please try again.';
-            }
+        $success = 'Product added successfully!';
+
+        // Clear form data on success (reset for next entry)
+        // This is good UX - user can immediately add another product
+        $name = $sku = $description = '';
+        $category_id = $price = $quantity = $min_stock_level = 0;
+    } else {
+        $error = 'Failed to add product. Please try again.';
+    }
 }
 ?>
 <main>
@@ -96,12 +96,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
-                          <?php if ($error): ?>
-                          <?php echo display_error($error); ?>
-                          <?php endif; ?>
-                          <?php if ($success): ?>
-                          <?php echo display_success($success); ?>
-                          <?php endif; ?>
+                        <?php if ($error): ?>
+                            <?php echo display_error($error); ?>
+                        <?php endif; ?>
+                        <?php if ($success): ?>
+                            <?php echo display_success($success); ?>
+                        <?php endif; ?>
                         <form method="POST">
                             <div class="row">
                                 <div class="col-md-6">

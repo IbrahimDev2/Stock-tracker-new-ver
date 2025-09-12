@@ -23,6 +23,14 @@
  * reliable than absolute positioning for basic app layout.
  */
 
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+
 
 /* Make the <main> element take remaining space so footer stays at bottom.
    Mental model: main is the flexible region that grows; footer does not. */
@@ -52,6 +60,20 @@ main {
        only when necessary to override Bootstrap defaults. Way of thinking: hover
        should be visible but not too loud. */
     color: #ffc107 !important;
+}
+
+.navbar{
+    background-color: #0E402D;
+}
+
+.footer{
+    background-color: #0E402D;
+
+}
+
+.navbar .nav-link,
+.navbar .navbar-brand{
+    color: #ffff;
 }
 /* Import fonts */
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);

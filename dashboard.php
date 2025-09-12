@@ -1,27 +1,136 @@
-<?php    
+<?php
 session_start();
+include 'include/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <!-- Bootstrap CSS for alert -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
 
-<div class="container mt-4">
+<main class="container mt-4">
     <?php if(isset($_SESSION['success'])): ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?= htmlspecialchars($_SESSION['success']) ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <?php unset($_SESSION['success']); // Show message only once ?>
+        <?php unset($_SESSION['success']); ?>
     <?php endif; ?>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+
+    <div class="container mt-4">
+         <!-- ROW: Title Row -->
+        <!-- row = Bootstrap grid row, inside container -->
+        <div class="row">
+            <!-- col-12 = column that takes full width -->
+            <div class="col-12">
+                <h1 class="mb-4">Inventory Management Dashboard</h1>
+                <!-- THINK: Heading for the page -->
+                <!-- Without Bootstrap: <h1 style="margin-bottom:20px;"> ... -->
+            </div>
+        
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-3 d-flex">
+                <div class="card bg-primary text-white flex-fill">
+                <div class="card-body">
+                    <h5 class="card-title">Total Products</h5>
+                    <h2>200</h2>
+                </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 d-flex">
+                <div class="card bg-warning text-white flex-fill">
+                <div class="card-body">
+                    <h5 class="card-title">Low Stock Items</h5>
+                    <h2>2</h2>
+                </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 d-flex">
+                <div class="card bg-success text-white flex-fill">
+                <div class="card-body">
+                    <h5 class="card-title">Categories</h5>
+                    <h2>54</h2>
+                </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 d-flex">
+                <div class="card bg-info text-white flex-fill">
+                <div class="card-body">
+                    <h5 class="card-title">Quick Actions</h5>
+                    <a href="products/add.php" class="btn btn-light btn-sm">Add Product</a>
+                </div>
+                </div>
+            </div>
+            </div>
+
+        </div>
+            <!-- =================== RECENT STOCK MOVEMENTS (TABLE) =================== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                
+                <!-- Card Header -->
+                <div class="card-header">
+                    <h5>Recent Stock Movements</h5>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body">
+                    <?php if (empty($recent_movements)): ?>
+                        <!-- If no data available -->
+                        <p class="text-muted">No recent stock movements found.</p>
+                    <?php else: ?>
+                        <!-- Table wrapper (scrollable on small devices) -->
+                        <div class="table-responsive">
+                            <!-- Bootstrap striped table -->
+                            <!-- THINK: Table is the best structure for tabular data -->
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Type</th>
+                                        <th>Quantity</th>
+                                        <th>Date</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($recent_movements as $movement): ?>
+                                        <tr>
+                                            <!-- Product Name -->
+                                            <td><?php echo htmlspecialchars($movement['product_name']); ?></td>
+                                            
+                                            <!-- Type: IN or OUT -->
+                                            <td>
+                                                <!-- Badge color depends on type -->
+                                                <span class="badge 
+                                                    <?php echo $movement['movement_type'] == 'in' 
+                                                        ? 'badge-success' 
+                                                        : 'badge-danger'; ?>">
+                                                    <?php echo ucfirst($movement['movement_type']); ?>
+                                                </span>
+                                            </td>
+
+                                            <!-- Quantity -->
+                                            <td><?php echo $movement['quantity']; ?></td>
+
+                                            <!-- Date formatted -->
+                                            <td><?php echo date('M d, Y H:i', strtotime($movement['created_at'])); ?></td>
+
+                                            <!-- Notes -->
+                                            <td><?php echo htmlspecialchars($movement['notes'] ?? ''); ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<?php
+include 'include/footer.php';
+?>

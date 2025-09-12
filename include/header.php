@@ -12,17 +12,17 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="/Stock-tracker-new-ver/css/style.css" rel="stylesheet">
 </head>
 <body>
      <!-- ============================= -->
     <!-- NAVIGATION BAR -->
     <!-- ============================= -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg">
         <!-- Use justify-content-between for proper spacing -->
         <div class="container px-4 d-flex flex-wrap align-items-center justify-content-between">
             <!-- Brand / Logo -->
-            <a class="navbar-brand me-4" href="index.php">
+            <a class="navbar-brand me-4" href="/Stock-tracker-new-ver/dashboard.php">
                 <i class="fas fa-boxes"></i> Inventory System
             </a>
             
@@ -30,13 +30,13 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-   =
+   
             <!-- Navbar links -->
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <!-- Dashboard -->
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php">
+                        <a class="nav-link" href="/Stock-tracker-new-ver/dashboard.php">
                             <i class="fas fa-home"></i> Dashboard
                         </a>
                     </li>
@@ -47,8 +47,8 @@
                             <i class="fas fa-box"></i> Products
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="products/index.php">View All</a></li>
-                            <li><a class="dropdown-item" href="products/add.php">Add New</a></li>
+                            <li><a class="dropdown-item" href="/Stock-tracker-new-ver/products/index.php">View All</a></li>
+                            <li><a class="dropdown-item" href="/Stock-tracker-new-ver/products/add.php">Add New</a></li>
                         </ul>
                     </li>
 
@@ -90,7 +90,3 @@
         </div>
     </nav>
 
-<!-- Bootstrap JS Bundle (includes Popper) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

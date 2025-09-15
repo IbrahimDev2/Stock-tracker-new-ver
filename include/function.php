@@ -194,4 +194,3 @@ function delete_product($conn, $id) {
     $stmt = $conn->prepare("DELETE FROM products WHERE st_p_id = ?");
     return $stmt->execute([$id]);
 }
->>>>>>> Stashed changes

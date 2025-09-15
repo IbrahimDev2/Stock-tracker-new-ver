@@ -174,6 +174,29 @@ $data = $result->fetch_all(MYSQLI_ASSOC);
 }
 
 
+<<<<<<< Updated upstream
 
 
 ?>
+=======
+function get_product_by_id($conn, $id) {
+    $stmt = $conn->prepare("SELECT p.* FROM products p WHERE p.st_p_id = ?");
+    $stmt->bind_param("i", $id);  // Bind integer parameter
+    $stmt->execute();              // No arguments here
+    $result = $stmt->get_result(); // Get result object
+    return $result->fetch_assoc(); // Fetch row as associative array
+}
+
+
+function update_product($conn, $id, $name, $sku, $description, $price, $quantity, $min_stock_level) {
+    $stmt = $conn->prepare("UPDATE products SET st_p_name = ?, st_p_sku = ?, st_p_description = ?, st_price = ?, 
+                           st_quantity = ?, st_min_stock_level = ? WHERE st_p_id = ?");
+    return $stmt->execute([$name, $sku, $description, $price, $quantity, $min_stock_level, $id]);
+}
+
+
+function delete_product($conn, $id) {
+    $stmt = $conn->prepare("DELETE FROM products WHERE st_p_id = ?");
+    return $stmt->execute([$id]);
+}
+>>>>>>> Stashed changes

@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="sku" class="form-label">SKU *</label>
-                                        <input type="text" class="form-control" id="sku" name="sku"
+                                        <input type="number" class="form-control" id="sku" name="sku"
                                             value="">
                                         <div class="form-text">Stock Keeping Unit - must be unique</div>
                                     </div>

@@ -174,11 +174,6 @@ $data = $result->fetch_all(MYSQLI_ASSOC);
 }
 
 
-<<<<<<< Updated upstream
-
-
-?>
-=======
 function get_product_by_id($conn, $id) {
     $stmt = $conn->prepare("SELECT p.* FROM products p WHERE p.st_p_id = ?");
     $stmt->bind_param("i", $id);  // Bind integer parameter

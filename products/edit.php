@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 <?php
 ob_start();
 session_start();

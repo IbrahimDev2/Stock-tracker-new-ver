@@ -9,26 +9,8 @@ $search = isset($_GET['search']) ? sanitize_input($_GET['search']) : '';
 $category_id = isset($_GET['category']) ? intval($_GET['category']) : '';
 
 
-<<<<<<< Updated upstream
 
 
-=======
-if (isset($_SESSION['success'])) {
-    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">'
-        . htmlspecialchars($_SESSION['success']) .
-        '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-         </div>';
-    unset($_SESSION['success']);
-}
-
-if (isset($_SESSION['deleted'])) {
-    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">'
-        . htmlspecialchars($_SESSION['deleted']) .
-        '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-         </div>';
-    unset($_SESSION['deleted']);
-}
->>>>>>> Stashed changes
 
 
 $products = get_all_products($conn, $search, $category_id);

@@ -1,14 +1,5 @@
 <?php
 session_start();
-if (!defined('APP_INIT')) {
-define('APP_INIT', true);
-}
-// Check if the user is logged in
-if (!isset($_SESSION['email'])) {
-    // If session does not exist, redirect to login page
-    header("Location: /Stock-tracker-new-ver/index.php");
-    exit();
-}
 include '../connection.php';
 include '../include/header.php';
 include '../include/function.php';
@@ -20,7 +11,23 @@ $success = '';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+<<<<<<< Updated upstream
+    // =============================================================================
+    // GET AND SANITIZE INPUT DATA
+    // =============================================================================
+
+    /**
+     * Extract and clean all form data
+     * 
+     * Key principles demonstrated:
+     * - Always sanitize user input (prevent XSS attacks)
+     * - Handle optional fields properly (category_id can be empty)
+     * - Convert data to appropriate types (int, float)
+     * - Use null for optional database fields
+     */
+=======
  
+>>>>>>> Stashed changes
     $name = sanitize_input($_POST['name']);
     $sku = sanitize_input($_POST['sku']);
     $description = sanitize_input($_POST['description']);
@@ -29,7 +36,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $quantity = intval($_POST['quantity']);
     $min_stock_level = intval($_POST['min_stock_level']);
 
+<<<<<<< Updated upstream
+    // =============================================================================
+    // INPUT VALIDATION
+    // =============================================================================
+
+    /**
+     * Validate all input according to business rules
+     * 
+     * Validation principles:
+     * - Check required fields first
+     * - Validate data types and ranges
+     * - Provide clear, user-friendly error messages
+     * - Stop at first error (don't overwhelm user)
+     */
+=======
    
+>>>>>>> Stashed changes
     if (empty($name)) {
         $error = 'Product name is required.';
     } elseif (empty($sku)) {
@@ -46,6 +69,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (add_product($conn, $name, $sku, $description, $category_id, $price, $quantity, $min_stock_level)) {
         $success = 'Product added successfully!';
 
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+        // Clear form data on success (reset for next entry)
+        // This is good UX - user can immediately add another product
+=======
+
+>>>>>>> Stashed changes
+=======
+        // Clear form data on success (reset for next entry)
+        // This is good UX - user can immediately add another product
+>>>>>>> Stashed changes
         $name = $sku = $description = '';
         $category_id = $price = $quantity = $min_stock_level = 0;
     } else {
@@ -88,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="sku" class="form-label">SKU *</label>
-                                        <input type="number" class="form-control" id="sku" name="sku"
+                                        <input type="text" class="form-control" id="sku" name="sku"
                                             value="">
                                         <div class="form-text">Stock Keeping Unit - must be unique</div>
                                     </div>
@@ -104,15 +138,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="category_id" class="form-label">Category</label>
-                                       <select class="form-select" id="category_id" name="category_id" require>
-                                        <option value="select_category">Select Category</option>
-                                        <?php foreach ($categories as $category): ?>
-                                            <option value="<?php echo $category['st_ct_id']; ?>" 
-                                                    <?php echo ($category_id ?? '') == $category['st_ct_id'] ? 'selected' : ''; ?>>
-                                                <?php echo htmlspecialchars($category['st_ct_name']); ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
+                                        <select class="form-select" id="category_id" name="category_id">
+                                            <option value="1">Select Category</option>
+                                            <option value="2">Category</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

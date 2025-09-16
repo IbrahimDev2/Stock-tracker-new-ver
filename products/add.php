@@ -5,27 +5,14 @@ include '../include/header.php';
 include '../include/function.php';
 
 
-$error = '';     
-$success = '';   
+$error = '';
+$success = '';
 
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // =============================================================================
-    // GET AND SANITIZE INPUT DATA
-    // =============================================================================
 
-    /**
-     * Extract and clean all form data
-     * 
-     * Key principles demonstrated:
-     * - Always sanitize user input (prevent XSS attacks)
-     * - Handle optional fields properly (category_id can be empty)
-     * - Convert data to appropriate types (int, float)
-     * - Use null for optional database fields
-     */
- 
->>>>>>> Stashed changes
+
     $name = sanitize_input($_POST['name']);
     $sku = sanitize_input($_POST['sku']);
     $description = sanitize_input($_POST['description']);
@@ -34,20 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $quantity = intval($_POST['quantity']);
     $min_stock_level = intval($_POST['min_stock_level']);
 
-    // =============================================================================
-    // INPUT VALIDATION
-    // =============================================================================
 
-    /**
-     * Validate all input according to business rules
-     * 
-     * Validation principles:
-     * - Check required fields first
-     * - Validate data types and ranges
-     * - Provide clear, user-friendly error messages
-     * - Stop at first error (don't overwhelm user)
-     */
-   
     if (empty($name)) {
         $error = 'Product name is required.';
     } elseif (empty($sku)) {
@@ -64,22 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (add_product($conn, $name, $sku, $description, $category_id, $price, $quantity, $min_stock_level)) {
         $success = 'Product added successfully!';
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        // Clear form data on success (reset for next entry)
-        // This is good UX - user can immediately add another product
-=======
-
->>>>>>> Stashed changes
-=======
-        // Clear form data on success (reset for next entry)
-        // This is good UX - user can immediately add another product
->>>>>>> Stashed changes
-=======
-        // Clear form data on success (reset for next entry)
-        // This is good UX - user can immediately add another product
->>>>>>> Stashed changes
         $name = $sku = $description = '';
         $category_id = $price = $quantity = $min_stock_level = 0;
     } else {

@@ -71,10 +71,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         // Clear form data on success (reset for next entry)
         // This is good UX - user can immediately add another product
 =======
 
+>>>>>>> Stashed changes
+=======
+        // Clear form data on success (reset for next entry)
+        // This is good UX - user can immediately add another product
 >>>>>>> Stashed changes
 =======
         // Clear form data on success (reset for next entry)

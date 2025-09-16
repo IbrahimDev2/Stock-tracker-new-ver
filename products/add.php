@@ -11,7 +11,6 @@ $success = '';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-<<<<<<< Updated upstream
     // =============================================================================
     // GET AND SANITIZE INPUT DATA
     // =============================================================================
@@ -25,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      * - Convert data to appropriate types (int, float)
      * - Use null for optional database fields
      */
-=======
  
 >>>>>>> Stashed changes
     $name = sanitize_input($_POST['name']);
@@ -36,7 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $quantity = intval($_POST['quantity']);
     $min_stock_level = intval($_POST['min_stock_level']);
 
-<<<<<<< Updated upstream
     // =============================================================================
     // INPUT VALIDATION
     // =============================================================================
@@ -50,9 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      * - Provide clear, user-friendly error messages
      * - Stop at first error (don't overwhelm user)
      */
-=======
    
->>>>>>> Stashed changes
     if (empty($name)) {
         $error = 'Product name is required.';
     } elseif (empty($sku)) {

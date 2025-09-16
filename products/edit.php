@@ -200,4 +200,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </main>
 <?php require_once '../include/footer.php'; ?>
->>>>>>> Stashed changes

@@ -37,7 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $quantity = intval($_POST['quantity']);
     $min_stock_level = intval($_POST['min_stock_level']);
 
-
     if (empty($name)) {
         $error = 'Product name is required.';
     } elseif (empty($sku)) {
@@ -61,7 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $error = 'Failed to update product. Please try again.';
             }
         } catch (PDOException $e) {
-
             if (strpos($e->getMessage(), 'duplicate key') !== false || strpos($e->getMessage(), 'unique') !== false) {
                 $error = 'SKU already exists. Please use a different SKU.';
             } else {

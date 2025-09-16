@@ -4,22 +4,14 @@ include '../connection.php';
 include '../include/header.php';
 include '../include/function.php';
 
-// Variables to store user feedback messages
-$error = '';      // Error messages to display to user
-$success = '';    // Success messages to display to user
 
-/**
- * Process form submission when user submits the form
- * 
- * This demonstrates the standard form processing pattern:
- * 1. Check if form was submitted (POST method)
- * 2. Get and sanitize all input data
- * 3. Validate each field according to business rules
- * 4. If validation passes, attempt database operation
- * 5. Provide feedback to user (success or error message)
- * 6. Clear form on success, preserve data on error
- */
+$error = '';     
+$success = '';   
+
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+<<<<<<< Updated upstream
     // =============================================================================
     // GET AND SANITIZE INPUT DATA
     // =============================================================================
@@ -33,6 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      * - Convert data to appropriate types (int, float)
      * - Use null for optional database fields
      */
+=======
+ 
+>>>>>>> Stashed changes
     $name = sanitize_input($_POST['name']);
     $sku = sanitize_input($_POST['sku']);
     $description = sanitize_input($_POST['description']);
@@ -41,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $quantity = intval($_POST['quantity']);
     $min_stock_level = intval($_POST['min_stock_level']);
 
+<<<<<<< Updated upstream
     // =============================================================================
     // INPUT VALIDATION
     // =============================================================================
@@ -54,6 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      * - Provide clear, user-friendly error messages
      * - Stop at first error (don't overwhelm user)
      */
+=======
+   
+>>>>>>> Stashed changes
     if (empty($name)) {
         $error = 'Product name is required.';
     } elseif (empty($sku)) {
@@ -70,8 +69,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (add_product($conn, $name, $sku, $description, $category_id, $price, $quantity, $min_stock_level)) {
         $success = 'Product added successfully!';
 
+<<<<<<< Updated upstream
         // Clear form data on success (reset for next entry)
         // This is good UX - user can immediately add another product
+=======
+
+>>>>>>> Stashed changes
         $name = $sku = $description = '';
         $category_id = $price = $quantity = $min_stock_level = 0;
     } else {

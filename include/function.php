@@ -194,3 +194,9 @@ function delete_product($conn, $id) {
     $stmt = $conn->prepare("DELETE FROM products WHERE st_p_id = ?");
     return $stmt->execute([$id]);
 }
+// Category-related functions
+function get_all_categories($conn) {
+    $stmt = $conn->prepare("SELECT * FROM categories ORDER BY name ASC");
+    $stmt->execute();
+    return $stmt->fetchAll();
+}

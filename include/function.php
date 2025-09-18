@@ -196,7 +196,15 @@ function delete_product($conn, $id) {
 }
 // Category-related functions
 function get_all_categories($conn) {
-    $stmt = $conn->prepare("SELECT * FROM categories ORDER BY name ASC");
-    $stmt->execute();
-    return $stmt->fetchAll();
+    $stmt = $conn->prepare("SELECT * FROM categories ORDER BY st_ct_name ASC");
+    $stmt->execute();      
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC); // ✅ saari rows ek array of arrays
+}
+
+
+function add_category($conn, $name, $description) {
+    $stmt = $conn->prepare("INSERT INTO categories (st_ct_name, st_ct_description) VALUES (?, ?)");
+    $stmt->bind_param("ss", $name, $description); 
+    return $stmt->execute(); 
 }

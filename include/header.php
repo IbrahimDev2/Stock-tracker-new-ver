@@ -58,8 +58,8 @@
                             <i class="fas fa-tags"></i> Categories
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="categories/index.php">View All</a></li>
-                            <li><a class="dropdown-item" href="categories/add.php">Add New</a></li>
+                            <li><a class="dropdown-item" href="/Stock-tracker-new-ver/categories/index.php">View All</a></li>
+                            <li><a class="dropdown-item" href="/Stock-tracker-new-ver/categories/add.php">Add New</a></li>
                         </ul>
                     </li>
 

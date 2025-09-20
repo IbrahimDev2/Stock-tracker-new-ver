@@ -9,7 +9,7 @@ require_once '../include/header.php';
 $error = '';
 $success = '';
 
-
+$categories = get_all_categories($conn);
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 if ($id <= 0) {
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = sanitize_input($_POST['name']);
     $sku = sanitize_input($_POST['sku']);
     $description = sanitize_input($_POST['description']);
-    
+    $category_id = !empty($_POST['category_id']) ? intval($_POST['category_id']) : null;
     $price = floatval($_POST['price']);
     $quantity = intval($_POST['quantity']);
     $min_stock_level = intval($_POST['min_stock_level']);
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         // STEP 7: Database update try karna
         try {
-            if (update_product($conn, $id, $name, $sku, $description, $price, $quantity, $min_stock_level)) {
+            if (update_product($conn, $id, $name, $sku, $description,  $category_id, $price, $quantity, $min_stock_level)) {
                 $_SESSION['success'] = 'Product updated successfully!';
                 // Data refresh kar lo taake form updated values dikha sake
                 $product = get_product_by_id($conn, $id);
@@ -140,12 +140,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="category_id" class="form-label">Category</label>
-                                    <select class="form-select" id="category_id" name="category_id">
+                                  <select class="form-select" id="category_id" name="category_id">
                                         <option value="">Select Category</option>
                                         <?php foreach ($categories as $category): ?>
-                                            <option value="<?php echo $category['id']; ?>" 
-                                                    <?php echo $product['st_p_category_id'] == $category['id'] ? 'selected' : ''; ?>>
-                                                <?php echo htmlspecialchars($category['name']); ?>
+                                            <option value="<?php echo $category['st_ct_id']; ?>" 
+                                                    <?php echo ($category_id ?? '') == $category['st_ct_id'] ? 'selected' : ''; ?>>
+                                                <?php echo htmlspecialchars($category['st_ct_name']); ?>
                                             </option>
                                         <?php endforeach; ?>
                                     </select>

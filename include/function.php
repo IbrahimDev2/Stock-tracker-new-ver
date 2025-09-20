@@ -88,9 +88,10 @@ function get_all_products($conn, $search = '', $category_id = '') {
     // LEFT JOIN use kiya hai taake products without categories bhi fetch ho jaye
     // Logical thinking: Hum chahte hain ki main table (products) ke saare rows ho,
     // aur categories table se sirf matching rows. Agar match na ho → NULL.
-    $query = "SELECT p.* FROM products p";
+    $query = "SELECT p.*, c.st_ct_name as category_name FROM products p 
+              LEFT JOIN categories c ON p.st_p_category_id = c.st_ct_id";
 
-      // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Step 2: Prepare arrays for dynamic conditions and parameters
     // -------------------------------------------------------------------------
     // Logical thinking: 
@@ -126,7 +127,16 @@ function get_all_products($conn, $search = '', $category_id = '') {
     // -------------------------------------------------------------------------
     // Step 4: Add category filter if specified
     // -------------------------------------------------------------------------
-   
+     if (!empty($category_id)) {
+        $conditions[] = "p.st_p_category_id = ?";
+        $params[] = $category_id;
+
+        // Logical thinking:
+        // - This is an optional filter, only applied if user provides category_id
+        // Future improvement:
+        // - Could allow multiple categories by using IN (?, ?, ?)
+        // - Could validate category_id is numeric to prevent errors
+    }
     
     // -------------------------------------------------------------------------
     // Step 5: Build final query by combining conditions
@@ -183,10 +193,10 @@ function get_product_by_id($conn, $id) {
 }
 
 
-function update_product($conn, $id, $name, $sku, $description, $price, $quantity, $min_stock_level) {
-    $stmt = $conn->prepare("UPDATE products SET st_p_name = ?, st_p_sku = ?, st_p_description = ?, st_price = ?, 
+function update_product($conn, $id, $name, $sku, $description,  $category_id, $price, $quantity, $min_stock_level) {
+    $stmt = $conn->prepare("UPDATE products SET st_p_name = ?, st_p_sku = ?, st_p_description = ?, st_p_category_id = ?, st_price = ?, 
                            st_quantity = ?, st_min_stock_level = ? WHERE st_p_id = ?");
-    return $stmt->execute([$name, $sku, $description, $price, $quantity, $min_stock_level, $id]);
+    return $stmt->execute([$name, $sku, $description, $category_id, $price, $quantity, $min_stock_level, $id]);
 }
 
 

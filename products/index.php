@@ -142,7 +142,7 @@ $products = get_all_products($conn, $search, $category_id); // sab products ya f
                                             </td>
 
                                             <!-- Category -->
-                                            <td><?php echo htmlspecialchars($product['st_p_category_id'] ?? 'No Category'); ?></td>
+                                            <td><?php echo htmlspecialchars($product['category_name'] ?? 'No Category'); ?></td>
 
                                             <!-- Price -->
                                             <td>$<?php echo number_format($product['st_price'], 2); ?></td>

@@ -208,3 +208,20 @@ function add_category($conn, $name, $description) {
     $stmt->bind_param("ss", $name, $description); 
     return $stmt->execute(); 
 }
+function get_category_by_id($conn, $id) {
+    $stmt = $conn->prepare("SELECT * FROM categories WHERE st_ct_id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    return $stmt->get_result()->fetch_assoc();
+}
+
+function update_category($conn, $id, $name, $description) {
+    $stmt = $conn->prepare("UPDATE categories SET st_ct_name = ?, st_ct_description = ? WHERE st_ct_id = ?");
+    $stmt->bind_param("ssi", $name, $description, $id);
+    return $stmt->execute();
+}
+function delete_category($conn, $id) {
+    $stmt = $conn->prepare("DELETE FROM categories WHERE st_ct_id = ?");
+    $stmt->bind_param("i", $id);
+    return $stmt->execute();
+}

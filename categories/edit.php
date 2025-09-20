@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php if ($product_count > 0): ?>
                         <hr>
                         <div class="d-grid">
-                            <a href="../products/index.php?category=<?php echo $category['id']; ?>" class="btn btn-outline-primary">
+                            <a href="../products/index.php?category=<?php echo $category['st_ct_id']; ?>" class="btn btn-outline-primary">
                                 <i class="fas fa-box"></i> View Products in Category
                             </a>
                         </div>

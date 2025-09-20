@@ -7,7 +7,7 @@ include '../include/function.php';
 // Variables to store user feedback messages
 $error = '';      // Error messages to display to user
 $success = '';    // Success messages to display to user
-
+$categories = get_all_categories($conn);
 /**
  * Process form submission when user submits the form
  * 
@@ -130,10 +130,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="category_id" class="form-label">Category</label>
-                                        <select class="form-select" id="category_id" name="category_id">
-                                            <option value="1">Select Category</option>
-                                            <option value="2">Category</option>
-                                        </select>
+                                       <select class="form-select" id="category_id" name="category_id">
+                                        <option value="">Select Category</option>
+                                        <?php foreach ($categories as $category): ?>
+                                            <option value="<?php echo $category['st_ct_id']; ?>" 
+                                                    <?php echo ($category_id ?? '') == $category['st_ct_id'] ? 'selected' : ''; ?>>
+                                                <?php echo htmlspecialchars($category['st_ct_name']); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

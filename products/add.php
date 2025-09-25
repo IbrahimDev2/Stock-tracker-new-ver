@@ -1,18 +1,47 @@
 <?php
 session_start();
+if (!defined('APP_INIT')) {
+define('APP_INIT', true);
+}
+// Check if the user is logged in
+if (!isset($_SESSION['email'])) {
+    // If session does not exist, redirect to login page
+    header("Location: /Stock-tracker-new-ver/index.php");
+    exit();
+}
 include '../connection.php';
 include '../include/header.php';
 include '../include/function.php';
 
-
-$error = '';
-$success = '';
-
-
-
+// Variables to store user feedback messages
+$error = '';      // Error messages to display to user
+$success = '';    // Success messages to display to user
+$categories = get_all_categories($conn);
+/**
+ * Process form submission when user submits the form
+ * 
+ * This demonstrates the standard form processing pattern:
+ * 1. Check if form was submitted (POST method)
+ * 2. Get and sanitize all input data
+ * 3. Validate each field according to business rules
+ * 4. If validation passes, attempt database operation
+ * 5. Provide feedback to user (success or error message)
+ * 6. Clear form on success, preserve data on error
+ */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-
+    // =============================================================================
+    // GET AND SANITIZE INPUT DATA
+    // =============================================================================
+    
+    /**
+     * Extract and clean all form data
+     * 
+     * Key principles demonstrated:
+     * - Always sanitize user input (prevent XSS attacks)
+     * - Handle optional fields properly (category_id can be empty)
+     * - Convert data to appropriate types (int, float)
+     * - Use null for optional database fields
+     */
     $name = sanitize_input($_POST['name']);
     $sku = sanitize_input($_POST['sku']);
     $description = sanitize_input($_POST['description']);
@@ -21,7 +50,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $quantity = intval($_POST['quantity']);
     $min_stock_level = intval($_POST['min_stock_level']);
 
-
+    // =============================================================================
+    // INPUT VALIDATION
+    // =============================================================================
+    
+    /**
+     * Validate all input according to business rules
+     * 
+     * Validation principles:
+     * - Check required fields first
+     * - Validate data types and ranges
+     * - Provide clear, user-friendly error messages
+     * - Stop at first error (don't overwhelm user)
+     */
     if (empty($name)) {
         $error = 'Product name is required.';
     } elseif (empty($sku)) {
@@ -36,13 +77,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     if (add_product($conn, $name, $sku, $description, $category_id, $price, $quantity, $min_stock_level)) {
-        $success = 'Product added successfully!';
-
-        $name = $sku = $description = '';
-        $category_id = $price = $quantity = $min_stock_level = 0;
-    } else {
-        $error = 'Failed to add product. Please try again.';
-    }
+                $success = 'Product added successfully!';
+                
+                // Clear form data on success (reset for next entry)
+                // This is good UX - user can immediately add another product
+                $name = $sku = $description = '';
+                $category_id = $price = $quantity = $min_stock_level = 0;
+            } else {
+                $error = 'Failed to add product. Please try again.';
+            }
 }
 ?>
 <main>
@@ -62,12 +105,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
-                        <?php if ($error): ?>
-                            <?php echo display_error($error); ?>
-                        <?php endif; ?>
-                        <?php if ($success): ?>
-                            <?php echo display_success($success); ?>
-                        <?php endif; ?>
+                          <?php if ($error): ?>
+                          <?php echo display_error($error); ?>
+                          <?php endif; ?>
+                          <?php if ($success): ?>
+                          <?php echo display_success($success); ?>
+                          <?php endif; ?>
                         <form method="POST">
                             <div class="row">
                                 <div class="col-md-6">
@@ -80,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="sku" class="form-label">SKU *</label>
-                                        <input type="text" class="form-control" id="sku" name="sku"
+                                        <input type="number" class="form-control" id="sku" name="sku"
                                             value="">
                                         <div class="form-text">Stock Keeping Unit - must be unique</div>
                                     </div>
@@ -96,10 +139,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="category_id" class="form-label">Category</label>
-                                        <select class="form-select" id="category_id" name="category_id">
-                                            <option value="1">Select Category</option>
-                                            <option value="2">Category</option>
-                                        </select>
+                                       <select class="form-select" id="category_id" name="category_id" require>
+                                        <option value="select_category">Select Category</option>
+                                        <?php foreach ($categories as $category): ?>
+                                            <option value="<?php echo $category['st_ct_id']; ?>" 
+                                                    <?php echo ($category_id ?? '') == $category['st_ct_id'] ? 'selected' : ''; ?>>
+                                                <?php echo htmlspecialchars($category['st_ct_name']); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

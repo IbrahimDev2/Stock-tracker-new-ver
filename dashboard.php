@@ -1,6 +1,23 @@
 <?php
 session_start();
+
+define('APP_INIT', true);
+
+// Check if the user is logged in
+if (!isset($_SESSION['email'])) {
+    // If session does not exist, redirect to login page
+    header("Location: /Stock-tracker-new-ver/index.php");
+    exit();
+}
+require_once('connection.php');
+require_once('include/function.php');
 include 'include/header.php';
+
+
+$total_products   = get_total_products($conn);
+$low_stock_count  = get_low_stock_count($conn);
+$total_categories = get_total_categories($conn);
+$recent_movements = get_recent_movements($conn, 5);
 ?>
 
 <main class="container mt-4">
@@ -30,7 +47,7 @@ include 'include/header.php';
                 <div class="card bg-primary text-white flex-fill">
                 <div class="card-body">
                     <h5 class="card-title">Total Products</h5>
-                    <h2>200</h2>
+                   <h2><?php echo $total_products; ?></h2>
                 </div>
                 </div>
             </div>
@@ -39,7 +56,7 @@ include 'include/header.php';
                 <div class="card bg-warning text-white flex-fill">
                 <div class="card-body">
                     <h5 class="card-title">Low Stock Items</h5>
-                    <h2>2</h2>
+                    <h2><?php echo $low_stock_count; ?></h2>
                 </div>
                 </div>
             </div>
@@ -48,7 +65,7 @@ include 'include/header.php';
                 <div class="card bg-success text-white flex-fill">
                 <div class="card-body">
                     <h5 class="card-title">Categories</h5>
-                    <h2>54</h2>
+                     <h2><?php echo $total_categories; ?></h2>
                 </div>
                 </div>
             </div>
@@ -101,24 +118,24 @@ include 'include/header.php';
                                             <td><?php echo htmlspecialchars($movement['product_name']); ?></td>
                                             
                                             <!-- Type: IN or OUT -->
-                                            <td>
+                                            <td style="color:black;">
                                                 <!-- Badge color depends on type -->
                                                 <span class="badge 
-                                                    <?php echo $movement['movement_type'] == 'in' 
+                                                    <?php echo $movement['st_mt_movement_type'] == 'in' 
                                                         ? 'badge-success' 
-                                                        : 'badge-danger'; ?>">
-                                                    <?php echo ucfirst($movement['movement_type']); ?>
+                                                        : 'badge-danger'; ?>" style="background-color: <?php echo $movement['st_mt_movement_type'] == 'in' ? '#28a745' : '#dc3545'; ?>; color: white; padding: 5px 10px; border-radius: 5px;">
+                                                    <?php echo ucfirst($movement['st_mt_movement_type']); ?>
                                                 </span>
                                             </td>
 
                                             <!-- Quantity -->
-                                            <td><?php echo $movement['quantity']; ?></td>
+                                            <td><?php echo $movement['st_mt_quantity']; ?></td>
 
                                             <!-- Date formatted -->
-                                            <td><?php echo date('M d, Y H:i', strtotime($movement['created_at'])); ?></td>
+                                            <td><?php echo date('M d, Y H:i', strtotime($movement['st_mt_created_at'])); ?></td>
 
                                             <!-- Notes -->
-                                            <td><?php echo htmlspecialchars($movement['notes'] ?? ''); ?></td>
+                                            <td><?php echo htmlspecialchars($movement['st_mt_notes'] ?? ''); ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

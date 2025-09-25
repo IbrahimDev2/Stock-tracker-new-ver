@@ -1,4 +1,8 @@
 <?php
+
+if (!defined('APP_INIT')) {
+    exit("No direct access allowed");
+}
 // Database connection parameters
 $servername = "localhost";
 $username = "root"; // your database username

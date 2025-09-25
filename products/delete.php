@@ -1,5 +1,14 @@
 <?php
 session_start();
+if (!defined('APP_INIT')) {
+define('APP_INIT', true);
+}
+// Check if the user is logged in
+if (!isset($_SESSION['email'])) {
+    // If session does not exist, redirect to login page
+    header("Location: /Stock-tracker-new-ver/index.php");
+    exit();
+}
 // ============================================================
 // DELETE PRODUCT ACTION (Controller endpoint)
 // Purpose: URL me diye gaye product ID ko delete karke listing par wapas bhejna

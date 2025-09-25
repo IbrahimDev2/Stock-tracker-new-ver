@@ -2,7 +2,9 @@
 // ============================================
 // FORGOT PASSWORD SCRIPT USING PHPMailer
 // ============================================
-
+if (!defined('APP_INIT')) {
+define('APP_INIT', true);
+}
 // 1️⃣ Include database connection
 include 'connection.php'; // Make sure 'connection.php' has your $conn variable for DB
 
@@ -106,6 +108,13 @@ if(!empty($error)){
     $mail->Password = "wcirqrecufsihtgd"; // SMTP app password (generated from Gmail)
     $mail->Port = 587; // TLS port
     $mail->SMTPSecure = "tls"; // Encryption
+    $mail->SMTPOptions = array(
+    'ssl' => array(
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+        'allow_self_signed' => true
+    )
+);
     $mail->IsHTML(true); // Set email format to HTML
     $mail->From = "info.ibrahim172@gmail.com"; // From email
     $mail->FromName = "Ibrahim Khalil"; // From name

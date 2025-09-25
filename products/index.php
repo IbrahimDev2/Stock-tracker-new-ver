@@ -1,5 +1,14 @@
 <?php
 session_start();
+if (!defined('APP_INIT')) {
+define('APP_INIT', true);
+}
+// Check if the user is logged in
+if (!isset($_SESSION['email'])) {
+    // If session does not exist, redirect to login page
+    header("Location: /Stock-tracker-new-ver/index.php");
+    exit();
+}
 require_once '../connection.php';   // DB connection
 require_once '../include/function.php'; // Functions (get_all_products etc.)
 require_once '../include/header.php';    // Top HTML (menu, head, bootstrap links)
@@ -147,10 +156,18 @@ $products = get_all_products($conn, $search, $category_id); // sab products ya f
                                             <!-- Price -->
                                             <td>$<?php echo number_format($product['st_price'], 2); ?></td>
 
-                                            <!-- Stock Quantity with badge -->
+                                        
                                             <td>
                                                 <span class="badge 
-                                                    <?php echo $product['st_quantity'] <= $product['st_min_stock_level'] ? 'bg-danger' : 'bg-success'; ?>">
+                                                    <?php
+                                                        if ($product['st_quantity'] <= 0) {
+                                                            echo 'bg-danger';
+                                                        } elseif ($product['st_quantity'] <= $product['st_min_stock_level']) {
+                                                            echo 'bg-warning';
+                                                        } else {
+                                                            echo 'bg-success';
+                                                        }
+                                                    ?>">
                                                     <?php echo $product['st_quantity']; ?>
                                                 </span>
                                             </td>

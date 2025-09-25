@@ -1,5 +1,14 @@
 <?php
 session_start();
+if (!defined('APP_INIT')) {
+define('APP_INIT', true);
+}
+// Check if the user is logged in
+if (!isset($_SESSION['email'])) {
+    // If session does not exist, redirect to login page
+    header("Location: /Stock-tracker-new-ver/index.php");
+    exit();
+}
 require_once '../connection.php';
 require_once '../include/function.php';
 require_once '../include/header.php';

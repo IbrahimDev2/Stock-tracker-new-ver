@@ -1,4 +1,7 @@
 <?php
+if (!defined('APP_INIT')) {
+define('APP_INIT', true);
+}
 include('connection.php'); // Database connection
 $error = '';
 $success = '';

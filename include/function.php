@@ -1,4 +1,7 @@
 <?php
+if (!defined('APP_INIT')) {
+    exit("No direct access allowed");
+}
 // =============================================================================
 // UTILITY FUNCTIONS FOR DATA PROCESSING & UI 🍰
 // =============================================================================
@@ -234,4 +237,117 @@ function delete_category($conn, $id) {
     $stmt = $conn->prepare("DELETE FROM categories WHERE st_ct_id = ?");
     $stmt->bind_param("i", $id);
     return $stmt->execute();
+}
+function add_stock_movement($conn, $product_id, $movement_type, $quantity, $notes = '') {
+    try {
+        // Start transaction so all steps succeed or fail together
+            $conn->autocommit(FALSE);
+        
+        // Step 1: Record movement in stock_movements table
+        $stmt = $conn->prepare("
+            INSERT INTO stock_movements (st_mt_product_id, st_mt_movement_type, st_mt_quantity, st_mt_notes) 
+            VALUES (?, ?, ?, ?)
+        ");
+
+        if (!$stmt) {
+    // Agar prepare fail hua → MySQLi error dekho
+    die("Prepare failed: " . $conn->error);
+}
+        $stmt->execute([$product_id, $movement_type, $quantity, $notes]);
+        
+        // Step 2: Decide how quantity should change
+        // 'in' → add, 'out' → subtract
+        $multiplier = ($movement_type == 'in') ? 1 : -1;
+        $quantity_change = $quantity * $multiplier;
+        
+        // Step 3: Update the product quantity in products table
+        $update_stmt = $conn->prepare("
+            UPDATE products 
+            SET st_quantity = st_quantity + ? 
+            WHERE st_p_id = ?
+        ");
+        $update_stmt->execute([$quantity_change, $product_id]);
+        
+        // Step 4: Commit transaction, changes saved
+        $conn->commit();
+        return true;
+        
+    } catch (Exception $e) {
+    $conn->rollback();
+    die("Error in add_stock_movement: " . $e->getMessage());
+}
+
+}
+
+
+function get_stock_movements($conn, $limit = null) {
+    $query = "SELECT sm.*, p.st_p_name as product_name FROM stock_movements sm 
+              JOIN products p ON sm.st_mt_product_id = p.st_p_id 
+              ORDER BY sm.st_mt_created_at DESC";
+
+    if ($limit) {
+        $query .= " LIMIT " . intval($limit);
+    }
+    
+    $stmt = $conn->prepare($query);
+ $stmt->execute();      
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC); // ✅ saari rows ek array of arrays
+}
+function get_low_stock_count($conn) {
+    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM products WHERE st_quantity <= st_min_stock_level");
+    $stmt->execute();
+ // 3. Result lo
+    $result = $stmt->get_result();
+
+    // 4. Ek row fetch karo as associative array
+    $row = $result->fetch_assoc();
+
+    // 5. Sirf count value return karo
+    return $row['count'];
+}
+
+function get_low_stock_products($conn) {
+    $stmt = $conn->prepare("SELECT p.*, c.st_ct_name as category_name FROM products p 
+                           LEFT JOIN categories c ON p.st_p_category_id = c.st_ct_id 
+                           WHERE p.st_quantity <= p.st_min_stock_level 
+                           ORDER BY p.st_quantity ASC");
+   $stmt->execute();      
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC); // ✅ saari rows ek array of arrays
+}
+
+function get_total_products($conn) {
+    // 1. Prepare karo query
+    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM products"); 
+
+    // 2. Execute karo query
+    $stmt->execute();      
+
+    // 3. Result lo
+    $result = $stmt->get_result();
+
+    // 4. Ek row fetch karo as associative array
+    $row = $result->fetch_assoc();
+
+    // 5. Sirf count value return karo
+    return $row['count'];
+}
+
+
+function get_total_categories($conn) {
+    $stmt = $conn->prepare("SELECT COUNT(*) as count FROM categories");
+    $stmt->execute();
+   // 3. Result lo
+    $result = $stmt->get_result();
+
+    // 4. Ek row fetch karo as associative array
+    $row = $result->fetch_assoc();
+
+    // 5. Sirf count value return karo
+    return $row['count'];
+}
+
+function get_recent_movements($conn, $limit = 10) {
+    return get_stock_movements($conn, $limit);
 }

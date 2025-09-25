@@ -1,10 +1,14 @@
 <?php
 session_start();
+define('APP_INIT', true);
 include 'connection.php';
 
 $errors = [];
 $success = '';
-
+if(isset($_SESSION['user_id'])){
+    header("Location: dashboard.php"); // redirect if already logged in
+    exit();
+}
 if(isset($_POST['submit-btn'])) {
 
     // Sanitize inputs

@@ -69,8 +69,8 @@
                             <i class="fas fa-warehouse"></i> Stock
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="stock/movements.php">Movements</a></li>
-                            <li><a class="dropdown-item" href="stock/add_movement.php">Add Movement</a></li>
+                            <li><a class="dropdown-item" href="/Stock-tracker-new-ver/stock/movements.php">Movements</a></li>
+                            <li><a class="dropdown-item" href="/Stock-tracker-new-ver/stock/add_movement.php">Add Movement</a></li>
                         </ul>
                     </li>
 
@@ -80,10 +80,17 @@
                             <i class="fas fa-chart-bar"></i> Reports
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="reports/index.php">All Products</a></li>
-                            <li><a class="dropdown-item" href="reports/low_stock.php">Low Stock</a></li>
+                            <li><a class="dropdown-item" href="/Stock-tracker-new-ver/reports/index.php">All Products</a></li>
+                            <li><a class="dropdown-item" href="/Stock-tracker-new-ver/reports/low_stock.php">Low Stock</a></li>
                         </ul>
                     </li>
+                                        <!-- Logout -->
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" href="/Stock-tracker-new-ver/logout.php">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+
 
                 </ul>
             </div>

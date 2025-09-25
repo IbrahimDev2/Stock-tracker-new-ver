@@ -1,5 +1,6 @@
 <?php
 session_start();
+define('APP_INIT', true);
 
 include 'connection.php'; // DB connection
 

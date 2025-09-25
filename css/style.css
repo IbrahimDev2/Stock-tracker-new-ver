@@ -1,3 +1,28 @@
+/*
+  style_deep_comments.css
+  =======================
+  PURPOSE:
+  - This file contains the project's custom CSS with extremely detailed, line-by-line
+    comments aimed at beginners. Each rule is followed by explanations and the
+    "way of thinking" behind choosing that rule.
+
+  HOW TO READ THIS FILE (way-of-thinking):
+  1. Read a comment block above a selector to understand *why* the selector exists.
+  2. For each property, comments explain the rationale (accessibility, responsiveness,
+     visual hierarchy, or performance). Think: "What problem does this property solve?"
+  3. When you need to make changes, ask: "Which visual goal am I changing?" — then
+     find the related selector and adjust carefully.
+*/
+
+/*
+ * Base layout and page-level thinking
+ * ================================
+ * We start by defining the page background, minimum height and a simple flex
+ * layout so footer sticks to the bottom. The mental model: body is the outer
+ * container; main grows to fill available space. This is simpler and more
+ * reliable than absolute positioning for basic app layout.
+ */
+
 body {
     min-height: 100vh;
     display: flex;
@@ -5,107 +30,121 @@ body {
     margin: 0;
 }
 
+
+
+/* Make the <main> element take remaining space so footer stays at bottom.
+   Mental model: main is the flexible region that grows; footer does not. */
 main {
     flex: 1;
 }
 
-/* ==========================
-   Navbar & Footer Styling
-   ========================== */
-.navbar {
-    background-color: #0E402D;
-}
-
-.footer {
-    background-color: #0E402D;
-}
-
+/*
+ * Navigation styling
+ * ==================
+ * Small, focused tweaks to spacing and hover states. The thinking here:
+ * - Use transitions for perceived smoothness (UX)
+ * - Keep brand visible and bold for identity
+ */
 .navbar-brand {
-    font-weight: bold; /* Make brand text stand out */
+    /* Make the brand more prominent — heavier font weight for recognition */
+    font-weight: bold;
 }
 
 .navbar-nav .nav-link {
-    transition: color 0.3s ease; /* Smooth hover effect */
+    /* Add a subtle transition for color changes; avoids jarring instant color swaps */
+    transition: color 0.3s ease;
 }
 
 .navbar-nav .nav-link:hover {
-    color: #ffc107 !important; /* Yellow hover color */
+    /* On hover, change color to a warm accent (yellow). Use !important carefully
+       only when necessary to override Bootstrap defaults. Way of thinking: hover
+       should be visible but not too loud. */
+    color: #ffc107 !important;
+}
+
+.navbar{
+    background-color: #0E402D;
+}
+
+.footer{
+    background-color: #0E402D;
+
 }
 
 .navbar .nav-link,
-.navbar .navbar-brand {
-    color: #fff;
+.navbar .navbar-brand{
+    color: #ffff;
 }
+/* Import fonts */
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
 
-/* ==========================
-   Fonts & Global Reset
-   ========================== */
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700);
-
-* {
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* ==========================
-   Backgrounds
-   ========================== */
-.registration-body,
-.login-body {
-    background-image: url('../image/registration.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+.registration-body, .login-body {
+ background-image: url('../image/registration.jpg');
+    width: 100%;
+    height: 100%;
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-position: center; 
     color: #5A6650;
     font-family: 'Open Sans', sans-serif;
+    padding: 0px !important;
+    margin: 0px !important;
     font-size: 13px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-font-smoothing: antialiased;
-    margin: 0 !important;
-    padding: 0 !important;
 }
+
 
 .registration-body .container,
-.login-body>.container {
-    background-color: rgba(14, 64, 45, 0.4); /* 40% overlay */
+.login-body > .container {
+    background-color: rgba(14, 64, 45, 0.4); /* 40% opacity */
     width: 100%;
+
 }
 
-.login-body>.container {
+.login-body > .container {
     height: 100vh;
 }
 
-/* ==========================
-   Generic Resets
-   ========================== */
 ul li {
     list-style: none;
 }
 
-a,
-a:hover,
-a:focus {
+a, a:hover, a:focus {
     text-decoration: none;
     outline: none;
 }
 
-/* ==========================
-   Login Form
-   ========================== */
+/* #container {
+    width: 100%;
+    height: 100%;
+} */
+
+
+/*login page*/
+
 .form-signin {
     max-width: 330px;
-    margin: 100px auto;
+    margin: 100px auto 100px;
     background: #fff;
     border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
 
 .form-signin h2.form-signin-heading {
-    padding: 20px 15px;
+    margin: 0;
+    padding:20px 15px;
     text-align: center;
     background: #0E402D;
     border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
     color: #fff;
     font-size: 18px;
     text-transform: uppercase;
@@ -115,22 +154,29 @@ a:focus {
 
 .form-signin .checkbox {
     margin-bottom: 14px;
-    font-weight: 300;
+}
+.form-signin .checkbox {
+    font-weight: normal;
     color: #5A6650;
+    font-weight: 300;
     font-family: 'Open Sans', sans-serif;
 }
-
 .form-signin .form-control {
+    position: relative;
     font-size: 16px;
     height: auto;
     padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-
-.form-signin input[type="text"],
-.form-signin input[type="password"] {
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+.form-signin input[type="text"], .form-signin input[type="password"] {
     margin-bottom: 15px;
     border-radius: 5px;
+    -webkit-border-radius: 5px;
     border: 1px solid #eaeaea;
     box-shadow: none;
     font-size: 12px;
@@ -157,16 +203,18 @@ a:focus {
     color: #5A6650;
 }
 
+.form-signin a:hover {
+    color: #5A6650;
+}
+
 .login-wrap {
     padding: 20px;
 }
 
-/* ==========================
-   Social Login Buttons
-   ========================== */
-.login-social-link {
+.login-social-link  {
     display: inline-block;
-    margin: 20px 0 15px;
+    margin-top: 20px;
+    margin-bottom: 15px;
 }
 
 .login-social-link a {
@@ -175,73 +223,71 @@ a:focus {
     border-radius: 4px;
 }
 
+.login-social-link a:hover {
+    color: #fff;
+}
+
 .login-social-link a i {
     font-size: 20px;
     padding-right: 10px;
 }
 
-/* ==========================
-   Password Show/Hide
-   ========================== */
+
+/* password show hide */
 .password-container {
-    position: relative;
+  position: relative;
 }
 
 .password-container input {
-    width: 100%;
-    padding-right: 40px; /* space for eye icon */
+  width: 100%;
+  padding-right: 40px; /* space for eye icon */
 }
 
 .password-container button {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
-/* ==========================
-   Form Groups
-   ========================== */
-.form-group {
+/* input */
+.form-group{
     margin-bottom: 19px;
 }
 
-/* ==========================
-   Alerts
-   ========================== */
+
+/* alerts */
 .alert-success {
     background-color: #28a745 !important;
     color: #fff !important;
 }
-
 .alert {
-    position: relative;
-    z-index: 1050;
+    position: relative; /* ya fixed/absolute agar overlay ke upar chahiye */
+    z-index: 1050;      /* Bootstrap modals / alerts ke liye standard */
 }
 
-/* ==========================
-   Forgot Password / Errors
-   ========================== */
-.error p {
-    color: #FF0000;
-    font-size: 20px;
-    font-weight: bold;
-    margin: 50px;
-}
 
-/* ==========================
-   Responsive
-   ========================== */
-@media (max-width: 320px) {
-    .navbar .container {
-        padding-left: 5px;
-        padding-right: 5px;
-    }
+/* Forgot Password */
+ /* Error message styling */
+        .error p {
+            color:#FF0000;
+            font-size:20px;
+            font-weight:bold;
+            margin:50px;
+        }
 
-    .navbar-brand {
-        font-size: 14px; /* smaller for mobile */
-    }
+
+        /* Reponsive */
+        @media (max-width: 320px) {
+  .navbar .container {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .navbar-brand {
+    font-size: 14px; /* smaller logo text so it fits */
+  }
 }

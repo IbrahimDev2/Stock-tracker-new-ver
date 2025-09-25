@@ -36,6 +36,7 @@ if (isset($_SESSION['deleted'])) {
 
 // ========== STEP 3: Get data from database ==========
 $products = get_all_products($conn, $search, $category_id); // sab products ya filter ke according
+$categories = get_all_categories($conn); // dropdown ke liye categories
  // dropdown ke liye categories
 ?>
 <main>
@@ -71,16 +72,16 @@ $products = get_all_products($conn, $search, $category_id); // sab products ya f
                                    value="<?php echo htmlspecialchars($search); ?>" 
                                    placeholder="Search by name, SKU, or description...">
                         </div>
-                        <!-- Category Dropdown -->
+                       <!-- Category Dropdown -->
                         <div class="col-md-4">
                             <label for="category" class="form-label">Category</label>
                             <select class="form-select" id="category" name="category">
                                 <option value="">All Categories</option>
                                 <!-- PHP loop for showing categories in dropdown -->
                                 <?php foreach ($categories as $category): ?>
-                                    <option value="<?php echo $category['id']; ?>" 
-                                            <?php echo $category_id == $category['id'] ? 'selected' : ''; ?>>
-                                        <?php echo htmlspecialchars($category['name']); ?>
+                                    <option value="<?php echo $category['st_ct_id']; ?>" 
+                                            <?php echo $category_id == $category['st_ct_id'] ? 'selected' : ''; ?>>
+                                        <?php echo htmlspecialchars($category['st_ct_name']); ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -157,17 +158,10 @@ $products = get_all_products($conn, $search, $category_id); // sab products ya f
                                             <td>$<?php echo number_format($product['st_price'], 2); ?></td>
 
                                         
+                                           <!-- Stock Quantity with badge -->
                                             <td>
                                                 <span class="badge 
-                                                    <?php
-                                                        if ($product['st_quantity'] <= 0) {
-                                                            echo 'bg-danger';
-                                                        } elseif ($product['st_quantity'] <= $product['st_min_stock_level']) {
-                                                            echo 'bg-warning';
-                                                        } else {
-                                                            echo 'bg-success';
-                                                        }
-                                                    ?>">
+                                                    <?php echo $product['st_quantity'] <= $product['st_min_stock_level'] ? 'bg-danger' : 'bg-success'; ?>">
                                                     <?php echo $product['st_quantity']; ?>
                                                 </span>
                                             </td>

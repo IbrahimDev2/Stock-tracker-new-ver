@@ -30,8 +30,6 @@ body {
     margin: 0;
 }
 
-
-
 /* Make the <main> element take remaining space so footer stays at bottom.
    Mental model: main is the flexible region that grows; footer does not. */
 main {

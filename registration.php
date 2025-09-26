@@ -1,3 +1,4 @@
+<?php
 /**
 * User Registration Page
 *
@@ -29,7 +30,6 @@
 * @author [Ibrahim Khalil]
 * @version 1.0
 */
-<?php
 session_start();
 // Prevent direct access
 define('APP_INIT', true);

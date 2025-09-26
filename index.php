@@ -1,3 +1,4 @@
+<?php
 /**
 * Entry point for the Stock Tracker application.
 *
@@ -5,7 +6,6 @@
 *
 * @package StockTracker
 */
-<?php
 session_start();
 define('APP_INIT', true);
 

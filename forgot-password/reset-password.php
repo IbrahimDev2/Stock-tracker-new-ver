@@ -1,12 +1,12 @@
 <?php
 if (!defined('APP_INIT')) {
-define('APP_INIT', true);
+    define('APP_INIT', true);
 }
-include('connection.php'); // Database connection
+include('connection.php');
 $error = '';
 $success = '';
 
-// 1️⃣ Check if user clicked reset link
+// Validate reset link and check expiration
 if (isset($_GET["key"]) && isset($_GET["email"]) && isset($_GET["action"]) 
     && ($_GET["action"]=="reset") && !isset($_POST["action"])) {
 
@@ -32,7 +32,7 @@ if (isset($_GET["key"]) && isset($_GET["email"]) && isset($_GET["action"])
     }
 }
 
-// 2️⃣ Handle form submission
+// Handle password reset form submission
 if (isset($_POST["email"]) && isset($_POST["action"]) && $_POST["action"]=="update") {
     $pass1 = mysqli_real_escape_string($conn, $_POST["pass1"]);
     $pass2 = mysqli_real_escape_string($conn, $_POST["pass2"]);
@@ -75,7 +75,7 @@ body {
     text-align: center;
 }
 .panel-success{
-        background: #0E402D;
+    background: #0E402D;
     color: #fff;
 }
 </style>
@@ -87,17 +87,14 @@ body {
         <div class="panel-heading">Reset Your Password</div>
         <div class="panel-body">
 
-            <!-- Show error -->
             <?php if ($error != ''): ?>
                 <div class="alert alert-danger"><?php echo $error; ?></div>
             <?php endif; ?>
 
-            <!-- Show success -->
             <?php if ($success != ''): ?>
                 <div class="alert alert-success"><?php echo $success; ?></div>
             <?php endif; ?>
 
-            <!-- Show form only if no success -->
             <?php if ($success == '' && $error == '' || (isset($expDate) && $expDate >= $curDate)): ?>
             <form method="post" action="">
                 <input type="hidden" name="action" value="update">

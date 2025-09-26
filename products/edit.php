@@ -1,44 +1,44 @@
 <?php
-ob_start(); // sabse pehle
+ob_start();
 session_start();
 
 if (!defined('APP_INIT')) {
-define('APP_INIT', true);
+    define('APP_INIT', true);
 }
-// Check if the user is logged in
+
+// Ensure user is authenticated before accessing the page
 if (!isset($_SESSION['email'])) {
-    // If session does not exist, redirect to login page
     header("Location: /Stock-tracker-new-ver/index.php");
     exit();
 }
-require_once '../connection.php';  
-require_once '../include/function.php'; 
-require_once '../include/header.php';    
 
+require_once '../connection.php';
+require_once '../include/function.php';
+require_once '../include/header.php';
 
 $error = '';
 $success = '';
 
+// Fetch all categories for the category dropdown
 $categories = get_all_categories($conn);
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
+// Redirect if invalid product ID
 if ($id <= 0) {
     header('Location: index.php');
     exit;
 }
 
+// Fetch product details by ID
 $product = get_product_by_id($conn, $id);
-
 
 if (!$product) {
     header('Location: index.php');
     exit;
 }
 
-
-// STEP 5: Form submit hone ke baad (POST request handle karna)
+// Handle form submission for updating product details
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Input fields ko sanitize karna (security ke liye)
     $name = sanitize_input($_POST['name']);
     $sku = sanitize_input($_POST['sku']);
     $description = sanitize_input($_POST['description']);
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $quantity = intval($_POST['quantity']);
     $min_stock_level = intval($_POST['min_stock_level']);
 
-    // STEP 6: Validation (thinking: galat data to DB me nahi jana chahiye)
+    // Validate input fields
     if (empty($name)) {
         $error = 'Product name is required.';
     } elseif (empty($sku)) {
@@ -59,19 +59,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($min_stock_level < 0) {
         $error = 'Minimum stock level cannot be negative.';
     } else {
-        // STEP 7: Database update try karna
+        // Attempt to update product in the database
         try {
-            if (update_product($conn, $id, $name, $sku, $description,  $category_id, $price, $quantity, $min_stock_level)) {
+            if (update_product($conn, $id, $name, $sku, $description, $category_id, $price, $quantity, $min_stock_level)) {
                 $_SESSION['success'] = 'Product updated successfully!';
-                // Data refresh kar lo taake form updated values dikha sake
                 $product = get_product_by_id($conn, $id);
                 header("Location: index.php");
-            exit();
+                exit();
             } else {
                 $error = 'Failed to update product. Please try again.';
             }
         } catch (PDOException $e) {
-            // Duplicate SKU error handle karna (unique constraint)
+            // Handle duplicate SKU error (unique constraint)
             if (strpos($e->getMessage(), 'duplicate key') !== false || strpos($e->getMessage(), 'unique') !== false) {
                 $error = 'SKU already exists. Please use a different SKU.';
             } else {
@@ -80,17 +79,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
-
 ?>
 <main class="container mt-4">
 <div class="container mt-4">
-    <!-- Page Title + Back Button -->
+    <!-- Page Title and Back Button -->
     <div class="row">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h1>Edit Product</h1>
-                <!-- Back button -->
                 <a href="index.php" class="btn btn-secondary">
                     <i class="fas fa-arrow-left"></i> Back to Products
                 </a>
@@ -98,24 +94,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <!-- Main Row: Form (left) + Product Info (right) -->
+    <!-- Main Row: Form (left) -->
     <div class="row">
-        <!-- Left side = Product Edit Form -->
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-body">
 
-                    <!-- Error message (if validation failed) -->
+                    <!-- Display error message if validation fails -->
                     <?php if ($error): ?>
                         <?php echo display_error($error); ?>
                     <?php endif; ?>
                     
-                    <!-- Success message (if update successful) -->
+                    <!-- Display success message if update is successful -->
                     <?php if ($success): ?>
                         <?php echo display_success($success); ?>
                     <?php endif; ?>
 
-                    <!-- Form to update product -->
+                    <!-- Product update form -->
                     <form method="POST">
                         <div class="row">
                             <!-- Product Name -->
@@ -124,8 +119,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <label for="name" class="form-label">Product Name *</label>
                                     <input type="text" class="form-control" id="name" name="name" 
                                            value="<?php if (is_array($product) && isset($product['st_p_name'])) {
-    echo htmlspecialchars($product['st_p_name']);
-} ?>" required>
+                                               echo htmlspecialchars($product['st_p_name']);
+                                           } ?>" required>
                                 </div>
                             </div>
                             <!-- SKU -->
@@ -150,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="category_id" class="form-label">Category</label>
-                                  <select class="form-select" id="category_id" name="category_id">
+                                    <select class="form-select" id="category_id" name="category_id">
                                         <option value="">Select Category</option>
                                         <?php foreach ($categories as $category): ?>
                                             <option value="<?php echo $category['st_ct_id']; ?>" 
@@ -192,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                         </div>
 
-                        <!-- Buttons -->
+                        <!-- Form action buttons -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a href="index.php" class="btn btn-secondary">Cancel</a>
                             <button type="submit" class="btn btn-primary">
@@ -203,8 +198,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
         </div>
-        
-        
     </div>
 </div>
 </main>

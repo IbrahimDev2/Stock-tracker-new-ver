@@ -62,7 +62,7 @@ $movements = get_stock_movements($conn);
                                             <td>
                                                 <strong>
                                                     <?php
-                                                    echo htmlspecialchars($movement['st_mt_product_id']); ?>
+                                                    echo htmlspecialchars($movement['product_name']); ?>
                                                 </strong>
                                             </td>
                                             <td>

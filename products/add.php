@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!defined('APP_INIT')) {
-define('APP_INIT', true);
+    define('APP_INIT', true);
 }
 // Check if the user is logged in
 if (!isset($_SESSION['email'])) {
@@ -17,31 +17,15 @@ include '../include/function.php';
 $error = '';      // Error messages to display to user
 $success = '';    // Success messages to display to user
 $categories = get_all_categories($conn);
+
 /**
- * Process form submission when user submits the form
- * 
- * This demonstrates the standard form processing pattern:
- * 1. Check if form was submitted (POST method)
- * 2. Get and sanitize all input data
- * 3. Validate each field according to business rules
- * 4. If validation passes, attempt database operation
- * 5. Provide feedback to user (success or error message)
- * 6. Clear form on success, preserve data on error
+ * Handle form submission for adding a new product.
+ * Validates input, adds product, and provides user feedback.
  */
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // =============================================================================
     // GET AND SANITIZE INPUT DATA
     // =============================================================================
-    
-    /**
-     * Extract and clean all form data
-     * 
-     * Key principles demonstrated:
-     * - Always sanitize user input (prevent XSS attacks)
-     * - Handle optional fields properly (category_id can be empty)
-     * - Convert data to appropriate types (int, float)
-     * - Use null for optional database fields
-     */
     $name = sanitize_input($_POST['name']);
     $sku = sanitize_input($_POST['sku']);
     $description = sanitize_input($_POST['description']);
@@ -53,16 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // =============================================================================
     // INPUT VALIDATION
     // =============================================================================
-    
-    /**
-     * Validate all input according to business rules
-     * 
-     * Validation principles:
-     * - Check required fields first
-     * - Validate data types and ranges
-     * - Provide clear, user-friendly error messages
-     * - Stop at first error (don't overwhelm user)
-     */
     if (empty($name)) {
         $error = 'Product name is required.';
     } elseif (empty($sku)) {
@@ -75,17 +49,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Minimum stock level cannot be negative.';
     }
 
-
-    if (add_product($conn, $name, $sku, $description, $category_id, $price, $quantity, $min_stock_level)) {
-                $success = 'Product added successfully!';
-                
-                // Clear form data on success (reset for next entry)
-                // This is good UX - user can immediately add another product
-                $name = $sku = $description = '';
-                $category_id = $price = $quantity = $min_stock_level = 0;
-            } else {
-                $error = 'Failed to add product. Please try again.';
-            }
+    // Attempt to add product if no validation errors
+    if (!$error) {
+        if (add_product($conn, $name, $sku, $description, $category_id, $price, $quantity, $min_stock_level)) {
+            $success = 'Product added successfully!';
+            // Clear form data on success (reset for next entry)
+            $name = $sku = $description = '';
+            $category_id = $price = $quantity = $min_stock_level = 0;
+        } else {
+            $error = 'Failed to add product. Please try again.';
+        }
+    }
 }
 ?>
 <main>

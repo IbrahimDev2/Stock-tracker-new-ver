@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!defined('APP_INIT')) {
-define('APP_INIT', true);
+    define('APP_INIT', true);
 }
 // Check if the user is logged in
 if (!isset($_SESSION['email'])) {
@@ -17,7 +17,7 @@ if (!isset($_SESSION['email'])) {
 
 // --- Include files ---
 // require_once: file ko exactly ek dafa include karo (duplicate include se bacho)
-require_once '../connection.php';  
+require_once '../connection.php';
 require_once '../include/function.php';   // Business logic helpers: get_product_by_id(), delete_product()
 
 // --- Read input ---
@@ -35,7 +35,7 @@ if ($id > 0) {
     // DB se product nikaal ke dekh lo waqai maujood hai ya nahi
     // Why: bina check kiye delete chalaya to user ko "kuch hua hi nahi" wali feeling aayegi
     $product = get_product_by_id($conn, $id);
-    
+
     // Agar product mila...
     if ($product) {
 
@@ -48,20 +48,17 @@ if ($id > 0) {
             // header('Location: ...') : HTTP redirect bhejo
             // Query string me success message pass kar rahe hain (simple approach)
             header('Location: index.php?message=Product deleted successfully');
-
         } else {
 
             // --- Failure path (DB error, constraint issue, etc.) ---
             header('Location: index.php?error=Failed to delete product');
         }
-
     } else {
 
         // --- Not found path ---
         // Galat ID ya already deleted record -> user ko clear error dikhao
         header('Location: index.php?error=Product not found');
     }
-
 } else {
 
     // --- Invalid input path ---
@@ -72,4 +69,3 @@ if ($id > 0) {
 // --- Always terminate after redirect ---
 // header() ke baad exit; zaroor karo: warna neeche ka output redirect ko break kar sakta hai
 exit;
-?>

@@ -89,7 +89,7 @@ if (!empty($error)) {
             'verify_peer_name' => false,
             'allow_self_signed' => true
         )
-    );
+    ); // Add this line to disable SSL verification in production is not recommended
     $mail->IsHTML(true);
     $mail->From = "info.ibrahim172@gmail.com";
     $mail->FromName = "Ibrahim Khalil";

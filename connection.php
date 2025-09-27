@@ -3,10 +3,10 @@ if (!defined('APP_INIT')) {
     exit("No direct access allowed");
 }
 
-$servername = "localhost";
-$username = "root"; 
-$password = "dev";
-$dbname = "stock-tracker"; 
+$servername = "server";
+$username = "username"; 
+$password = "password";
+$dbname = "database_name"; 
 
 
 $conn = mysqli_connect($servername, $username, $password, $dbname);

@@ -10,7 +10,7 @@
 </head>
 <body>
     <!-- Main navigation bar for the Inventory Management System -->
-    <nav class="navbar navbar-expand-lg">
+   <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container px-4 d-flex flex-wrap align-items-center justify-content-between">
             <a class="navbar-brand me-4" href="/Stock-tracker-new-ver/dashboard.php">
                 <i class="fas fa-boxes"></i> Inventory System

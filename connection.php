@@ -4,13 +4,15 @@ if (!defined('APP_INIT')) {
 }
 
 $servername = "localhost";
-$username = "root";
+$username = "root"; 
 $password = "dev";
-$dbname = "stock-tracker";
+$dbname = "stock-tracker"; 
 
 
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 
+
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
+?>

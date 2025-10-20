@@ -30,17 +30,26 @@
 * @author [Ibrahim Khalil]
 * @version 1.0
 */
+// session start krdo
 session_start();
 // Prevent direct access
+// constant define kro jo file ko access  krne se rokega
 define('APP_INIT', true);
+// connection file add kro
 include 'connection.php';
 
+// ikhali variable bnao jiska naam error h  or usko array bna do
 $errors = [];
+// IK OR KHALI VARAIBLE BNAO JISKA NAME SUCCESS H OR WO KHALI H
 $success = '';
-
-if (isset($_SESSION['user_id'])) {
+// AGR SESSION KE USER_iD KEY EXSIST KRTI H TO IS BLOCK KO RUN KRDO AND AGR NI EXSIST KRTI TO IS BLOCK KO SKIP KRDO
+if (isset($_SESSION['email'])) {
+    // YH FUNCTION KEH RAHA KE BROWSER PE HTTP REQUEST REDIRECT KRNI H OR LOCATION SET KRDI H
     header("Location: dashboard.php");
+   //YH FUNCTION CODE KO TERMINATE BND KREGA IS BLOCK AB OR LINE RUN NI HOGI ISKE BAD BAHIR KA CODE EXECUTE HOGA
     exit();
+
+// IDHR AKR IF KA BLOCK END HOJAEGA AB AND AGR TO KEY EXSIST NI KRTI TO  YH BLOCK SKIP HOJAEGA
 }
 if (isset($_POST['submit-btn'])) {
 

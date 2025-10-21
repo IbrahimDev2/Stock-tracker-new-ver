@@ -51,9 +51,11 @@ if (isset($_SESSION['email'])) {
 
 // IDHR AKR IF KA BLOCK END HOJAEGA AB AND AGR TO KEY EXSIST NI KRTI TO  YH BLOCK SKIP HOJAEGA
 }
+
+// agr post method se submit button press hua h to if block run hoga agr nahi to yh skip hojaega
 if (isset($_POST['submit-btn'])) {
 
-
+    // yeh sab vraiables form ka data store krrahe and unko protect b krrahe hain
     $fullname = mysqli_real_escape_string($conn, $_POST['fullname']);
     $address  = mysqli_real_escape_string($conn, $_POST['address']);
     $email    = mysqli_real_escape_string($conn, $_POST['email']);
@@ -64,21 +66,29 @@ if (isset($_POST['submit-btn'])) {
     $gender   = $_POST['gender'] ?? null;
     $agree    = isset($_POST['atc']) ? 1 : 0;
 
-
+    //  agr password retype password ke equal nahi h to yh block run hoga wrna skip hojaega
     if ($password !== $retype_pass) {
+        // errors arrray me password key me  yh message store krdo ab jo v password error ayefa waha yeh ayega
         $errors['password'] = "Passwords do not match.";
     }
 
-
+    // ik variable bnao  or usme query run krwao ke databse me user table ke andr username and password exsist rkte hain to uuska data le ao wrna na lao  or bs ik row lekr aan
     $user_check_query = "SELECT * FROM users WHERE `st-username`='$username' OR `st-email`='$email' LIMIT 1";
+    // result variable query jo b data lai h store krdo
     $result = mysqli_query($conn, $user_check_query);
+    // user variable me ik functional chalo and jo result ata h usko string me convert krdo
     $user = mysqli_fetch_assoc($result);
 
+    // agr user me kch data string me convert hua h to yh block run hoga wrna skip hoga
     if ($user) {
+        // agr user name ke array me key username variable kke brabr h to yh block run hoga
         if ($user['st-username'] === $username) {
+            // errors array me username key me variable store krdo
             $errors['username'] = "Username already exists.";
         }
+        // agr email ke array me key email variable kke brabr h to yh block run hoga
         if ($user['st-email'] === $email) {
+            // errors array me email key me variable store krdo
             $errors['email'] = "Email already exists.";
         }
     }
